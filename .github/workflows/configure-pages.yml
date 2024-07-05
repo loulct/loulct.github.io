@@ -1,2 +1,17 @@
-- name: Configure GitHub Pages
-  uses: actions/configure-pages@v5.0.0
+name: Configure Github Pages CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Configure GitHub Pages
+      uses: actions/configure-pages@v5.0.0
