@@ -14,6 +14,7 @@ html, body{
 a{
   display: inline-block;
   line-height: 1;
+  text-decoration: none;
 }
 
 .linkedin{
@@ -218,4 +219,47 @@ dt{
   font-size:3.333vw;
   font-weight:500;
   color: var(--text-black);
+}
+
+/*Dropdown menu*/
+
+.dropbtn {
+  background-color: var(--primary-color);
+  color: var(--text-black);
+  padding: 16px;
+  font-size: 16px;
+  border: 2px solid var(--primary-orange);
+  cursor: pointer;
+  width:110px;
+  font-family: 'Nunito', sans-serif;
+}
+
+.dropdown {
+  position:fixed;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  z-index: 1;
+}
+
+.dropdown-content button{
+  color: black;
+  padding: 12px 16px;
+  width:100px;
+  display: block;
+  border: none;
+  font-size: 16px;
+  font-family: 'Nunito', sans-serif;
+}
+
+.dropdown-content button:hover {background-color: var(--primary-orange)}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.dropdown:hover .dropbtn {
+  background-color: var(--primary-orange);
 }
