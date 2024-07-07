@@ -1,7 +1,8 @@
 https://loulct.github.io
 
 # TODO
-- make responsive (dont use viewport) (text and images)
+- make images responsive
+- change torus path
 
 # run localhost for tests
 npm run dev
