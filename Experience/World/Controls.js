@@ -9,6 +9,7 @@ export default class Controls{
         this.scene = this.experience.scene;
         this.time = this.experience.time;
         this.camera = this.experience.camera;
+        this.room =  this.experience.room;
         GSAP.registerPlugin(ScrollTrigger);
 
         this.progress = 0;
@@ -38,13 +39,11 @@ export default class Controls{
             new THREE.Vector3(-12, 6, 5),
         ], true);
 
-        
-        /*
         this.timeline = new GSAP.timeline();
-        this.timeline.to(this.room.position, {
+        this.timeline.to(this.room.torus.position, {
             x: 5,
             duration:20,
-        });*/
+        });
     }
 
     showPath(){

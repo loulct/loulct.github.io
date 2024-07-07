@@ -6,7 +6,8 @@ import Time from "./Utils/Time.js";
 import Camera from "./Camera.js";
 import Renderer from "./Renderer.js";
 
-import World from "./World/World.js";
+import Room from "./World/Room.js";
+import Controls from "./World/Controls.js";
 
 export default class Experience{
     static instance;
@@ -22,7 +23,8 @@ export default class Experience{
         this.time = new Time();
         this.camera = new Camera();
         this.renderer = new Renderer();
-        this.world = new World();
+        this.room = new Room();
+        this.controls = new Controls();
 
         this.time.on("update", ()=>{
             this.update();
@@ -35,7 +37,8 @@ export default class Experience{
     update(){
         this.camera.update();
         this.renderer.update();
-        this.world.update();
+        this.room.update();
+        this.controls.update();
     }
 
     resize(){
