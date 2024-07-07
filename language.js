@@ -1,8 +1,8 @@
 window.addEventListener('load', function(e){
     let en = document.getElementsByClassName("en");
-    for (let i = 0; i < en.length; i++) {
-        en[i].style.display = 'none';
-    }
+    [].forEach.call(en, function (section) {
+        section.style.display = 'none';
+    });
 });
 
 document.querySelectorAll('.toggle-button').forEach(function(button){
