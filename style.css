@@ -230,7 +230,7 @@ dt{
   color: var(--text-black);
   padding: 16px;
   font-size: 16px;
-  border: 2px solid var(--primary-orange);
+  border: 2px solid var(--primary-pink);
   cursor: pointer;
   width:110px;
   font-family: 'Nunito', sans-serif;
@@ -238,12 +238,15 @@ dt{
 
 .dropdown {
   position:fixed;
+  right:0;
+  z-index: 1;
 }
 
 .dropdown-content {
   display: none;
   position: absolute;
   z-index: 1;
+  right:0;
 }
 
 .dropdown-content button{
