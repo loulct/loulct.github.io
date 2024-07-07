@@ -7,6 +7,7 @@ export default class Controls{
     constructor(){
         this.experience = new Experience();
         this.scene = this.experience.scene;
+        this.sizes = this.experience.sizes;
         this.time = this.experience.time;
         this.camera = this.experience.camera;
         this.room =  this.experience.room;
@@ -33,16 +34,24 @@ export default class Controls{
         this.curve = new THREE.CatmullRomCurve3( [
             new THREE.Vector3(0, 0, -5),
             new THREE.Vector3(5, 12, 0),
-            new THREE.Vector3(0, 5, 5),
-            new THREE.Vector3(15, 0, 5),
-            new THREE.Vector3(0, 5, 5),
-            new THREE.Vector3(-12, 6, 5),
+            //new THREE.Vector3(0, 5, 5),
+            //new THREE.Vector3(15, 0, 5),
+            //new THREE.Vector3(0, 5, 5),
+            new THREE.Vector3(5, 6, 5),
         ], true);
 
         this.timeline = new GSAP.timeline();
         this.timeline.to(this.room.torus.position, {
-            x: 5,
-            duration:20,
+            x: () => {
+                return this.sizes.width * 0.002;
+            },
+            scrollTrigger:{
+                trigger:".hero-second",
+                start:"top top",
+                end:"bottom bottom",
+                scrub: 3,
+                invalidateOnRefresh:true,
+            },
         });
     }
 
