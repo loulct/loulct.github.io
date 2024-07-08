@@ -162,21 +162,12 @@ dt{
   font-size:32px;
 }
 
-.hero-main-sub-description{
-  font-size:18px;
-}
-
 .hero-main-sub{
   margin-top: 5%;
 }
 
 .hero-second-subheading{
-  font-size:18px;
-}
-
-.hero-second-sub-subheading{
-  text-align: left;
-  font-size:16px;
+  font-size:24px;
 }
 
 .hero-second-sub{
@@ -193,7 +184,7 @@ dt{
 
 .section-title-text{
   position:relative;
-  font-size:40px;
+  font-size:54px;
   font-weight:500;
   transform-origin: left;
   text-transform: uppercase;
@@ -201,7 +192,7 @@ dt{
 
 .section-detail-title-text{
   position:relative;
-  font-size:40px;
+  font-size:38px;
   font-weight:500;
   transform-origin: left;
   text-transform: uppercase;
@@ -215,12 +206,26 @@ dt{
   text-transform: uppercase;
 }
 
+.section-detail-anchor-link{
+  font-size:20px;
+  font-weight:500;
+  transform-origin: left;
+}
+
+.time-on-job{
+  font-size: 16px;
+}
+
 .section-number{
   position:relative;
   bottom:15px;
-  font-size:40px;
+  font-size:64px;
   font-weight:500;
   color: var(--text-black);
+}
+
+#age{
+  font-size: 32px;
 }
 
 /*Toogle button*/
