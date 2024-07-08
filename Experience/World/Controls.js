@@ -26,31 +26,120 @@ export default class Controls{
         this.lookAtPosition = new THREE.Vector3(0, 0, 0);
 
         this.setPath();
+        this.setScrollTrigger();
         //this.showPath();
         this.onWheel();
     }
 
     setPath(){
         this.curve = new THREE.CatmullRomCurve3( [
-            new THREE.Vector3(0, 0, -5),
-            new THREE.Vector3(5, 12, 0),
-            //new THREE.Vector3(0, 5, 5),
-            //new THREE.Vector3(15, 0, 5),
-            //new THREE.Vector3(0, 5, 5),
-            new THREE.Vector3(5, 6, 5),
+            new THREE.Vector3(2, 5, -10),
         ], true);
+    }
 
-        this.timeline = new GSAP.timeline();
-        this.timeline.to(this.room.torus.position, {
-            x: () => {
-                return this.sizes.width * 0.002;
+    setScrollTrigger(){
+        ScrollTrigger.matchMedia({
+            "(min-width: 969px)": () => {
+
+                this.room.torus.scale.set(0.2, 0.2, 0.2);
+                this.room.torus.position.set(0, 0, 0);
+
+                this.firstMoveTimeline = new GSAP.timeline({
+                    scrollTrigger:{
+                        trigger:".hero-second",
+                        start:"top top",
+                        end:"bottom bottom",
+                        scrub: 3,
+                        invalidateOnRefresh:true,
+                    },
+                });
+                this.firstMoveTimeline.to(this.room.torus.position, {
+                    x: () => {
+                        return this.sizes.width * 0.002;
+                    },
+                });
+
+                
+                this.secondMoveTimeline = new GSAP.timeline({
+                    scrollTrigger:{
+                        trigger:".section-margin-second",
+                        start:"top top",
+                        end:"bottom bottom",
+                        scrub: 3,
+                        invalidateOnRefresh:true,
+                    },
+                });
+                this.secondMoveTimeline.to(this.room.torus.position, {
+                    x: () => {
+                        return -this.sizes.width * 0.002;
+                    },
+                });
+
+                this.thirdMoveTimeline = new GSAP.timeline({
+                    scrollTrigger:{
+                        trigger:".section-margin-third",
+                        start:"top top",
+                        end:"bottom bottom",
+                        scrub: 3,
+                        invalidateOnRefresh:true,
+                    },
+                });
+                this.thirdMoveTimeline.to(this.room.torus.position, {
+                    x: () => {
+                        return this.sizes.width * 0.002;
+                    },
+                });
             },
-            scrollTrigger:{
-                trigger:".hero-second",
-                start:"top top",
-                end:"bottom bottom",
-                scrub: 3,
-                invalidateOnRefresh:true,
+
+            "(max-width: 968px)": () => {
+
+                this.room.torus.position.set(0, 0, 0);
+
+                this.firstMoveTimeline = new GSAP.timeline({
+                    scrollTrigger:{
+                        trigger:".hero-second",
+                        start:"top top",
+                        end:"bottom bottom",
+                        scrub: 3,
+                        invalidateOnRefresh:true,
+                    },
+                });
+                this.firstMoveTimeline.to(this.room.torus.scale, {
+                    x: 0.1,
+                    y: 0.1,
+                    z: 0.1,
+                });
+
+                
+                this.secondMoveTimeline = new GSAP.timeline({
+                    scrollTrigger:{
+                        trigger:".section-margin-second",
+                        start:"top top",
+                        end:"bottom bottom",
+                        scrub: 3,
+                        invalidateOnRefresh:true,
+                    },
+                });
+                this.secondMoveTimeline.to(this.room.torus.scale, {
+                    x: 0.25,
+                    y: 0.25,
+                    z: 0.25,
+                });
+
+                this.thirdMoveTimeline = new GSAP.timeline({
+                    scrollTrigger:{
+                        trigger:".section-margin-third",
+                        start:"top top",
+                        end:"bottom bottom",
+                        scrub: 3,
+                        invalidateOnRefresh:true,
+                    },
+                });
+                this.thirdMoveTimeline.to(this.room.torus.scale, {
+                    x: 0.1,
+                    y: 0.1,
+                    z: 0.1,
+                });
             },
         });
     }
