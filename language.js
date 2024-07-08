@@ -1,10 +1,3 @@
-window.addEventListener('load', function(e){
-    let en = document.getElementsByClassName("en");
-    [].forEach.call(en, function (section) {
-        section.style.display = 'none';
-    });
-});
-
 document.querySelectorAll('.toggle-button').forEach(function(button){
     button.addEventListener('click', function(e) {
         let en = document.getElementsByClassName("en");
