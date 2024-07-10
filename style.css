@@ -298,8 +298,11 @@ dt{
   .hero-wrapper{
     width: calc(100% - 30px);
   }
+}
+
+@media (max-width: 500px){
   .section-title-text{
-    font-size: 48px;
+    font-size: 38px;
   }
 }
 
