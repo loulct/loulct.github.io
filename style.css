@@ -277,11 +277,34 @@ dt{
   transform: scale(0.9);
 }
 
+.github-readme-stats{
+  display:block;
+  justify-content: center;
+  align-items: center;
+  width: fit-content;
+  gap: 10px;
+}
+
 @media (max-width: 968px){
   .section{
     width: 100%;
   }
   .hero-second{
-    top:calc(75% - 120px);
+    top: calc(90% - 120px);
+  }
+  .hero-main{
+    top:calc(25% - 30px);
+  }
+  .hero-wrapper{
+    width: calc(100% - 30px);
+  }
+  .section-title-text{
+    font-size: 48px;
+  }
+}
+
+@media (min-width: 1500px) {
+  .github-readme-stats{
+    display: flex;
   }
 }
