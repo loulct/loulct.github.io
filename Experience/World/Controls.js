@@ -11,6 +11,7 @@ export default class Controls{
         this.time = this.experience.time;
         this.camera = this.experience.camera;
         this.room =  this.experience.room;
+        this.preloader = this.experience.preloader;
         GSAP.registerPlugin(ScrollTrigger);
 
         this.progress = 0;
@@ -25,10 +26,12 @@ export default class Controls{
         this.position = new THREE.Vector3(0, 0, 0);
         this.lookAtPosition = new THREE.Vector3(0, 0, 0);
 
-        this.setPath();
-        this.setScrollTrigger();
-        //this.showPath();
-        this.onWheel();
+        this.preloader.on("enablecontrols", ()=>{
+            this.setPath();
+            this.setScrollTrigger();
+            //this.showPath();
+            this.onWheel();
+        });
     }
 
     setPath(){
@@ -41,7 +44,6 @@ export default class Controls{
         ScrollTrigger.matchMedia({
             "(min-width: 969px)": () => {
 
-                this.room.torus.scale.set(0.2, 0.2, 0.2);
                 this.room.torus.position.set(0, 0, 0);
 
                 this.firstMoveTimeline = new GSAP.timeline({
@@ -49,8 +51,9 @@ export default class Controls{
                         trigger:".hero-second",
                         start:"top top",
                         end:"bottom bottom",
-                        scrub: 3,
+                        scrub: 2,
                         invalidateOnRefresh:true,
+                        //markers:true,
                     },
                 });
                 this.firstMoveTimeline.to(this.room.torus.position, {
@@ -65,8 +68,9 @@ export default class Controls{
                         trigger:".section-margin-second",
                         start:"top top",
                         end:"bottom bottom",
-                        scrub: 3,
+                        scrub: 2,
                         invalidateOnRefresh:true,
+                        //markers:true,
                     },
                 });
                 this.secondMoveTimeline.to(this.room.torus.position, {
@@ -80,8 +84,9 @@ export default class Controls{
                         trigger:".section-margin-third",
                         start:"top top",
                         end:"bottom bottom",
-                        scrub: 3,
+                        scrub: 2,
                         invalidateOnRefresh:true,
+                        //markers:true,
                     },
                 });
                 this.thirdMoveTimeline.to(this.room.torus.position, {

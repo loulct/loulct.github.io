@@ -5,6 +5,7 @@ import Time from "./Utils/Time.js";
 
 import Camera from "./Camera.js";
 import Renderer from "./Renderer.js";
+import Preloader from "./Preloader.js";
 
 import Room from "./World/Room.js";
 import Controls from "./World/Controls.js";
@@ -24,7 +25,10 @@ export default class Experience{
         this.camera = new Camera();
         this.renderer = new Renderer();
         this.room = new Room();
+        this.preloader = new Preloader();
         this.controls = new Controls();
+
+        this.time.emit("ready");
 
         this.time.on("update", ()=>{
             this.update();
@@ -38,7 +42,9 @@ export default class Experience{
         this.camera.update();
         this.renderer.update();
         this.room.update();
-        this.controls.update();
+        if (this.controls) {
+            this.controls.update();
+        }
     }
 
     resize(){

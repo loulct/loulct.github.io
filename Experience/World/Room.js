@@ -1,12 +1,15 @@
 import * as THREE from "three";
 import Experience from "../Experience.js";
 import GSAP from "gsap";
+import { EventEmitter } from "events";
 
 
-export default class Room{
+export default class Room extends EventEmitter{
     constructor(){
+        super();
         this.experience = new Experience();
         this.scene = this.experience.scene;
+        this.time = this.experience.time;
 
         this.lerp = {
             current:0,
@@ -14,8 +17,11 @@ export default class Room{
             ease:0.1,
         };
 
-        this.setModel();
-        this.onMouseMove();
+        this.time.on("ready", ()=>{
+            this.setModel();
+            this.onMouseMove();
+        });
+        
     }
 
     setModel(){
@@ -23,8 +29,9 @@ export default class Room{
         this.material = new THREE.MeshBasicMaterial({color:0xFF6347, wireframe:true});
         this.torus = new THREE.Mesh(this.geometry, this.material);
 
-        this.scene.add(this.torus)
-        this.torus.scale.set(0.2, 0.2, 0.2);
+        this.scene.add(this.torus);
+        this.torus.scale.set(0, 0, 0);
+        this.emit("worldready");
     }
       
     onMouseMove(){
