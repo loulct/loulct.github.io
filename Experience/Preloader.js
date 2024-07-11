@@ -28,9 +28,9 @@ export default class Preloader extends EventEmitter{
             }
         })
         .to(this.room.torus.scale, {
-            x:0.2,
-            y:0.2,
-            z:0.2,
+            x:0.02,
+            y:0.02,
+            z:0.02,
             ease: "back.out(2.5)",
             duration:1.5,
         });

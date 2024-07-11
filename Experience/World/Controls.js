@@ -110,9 +110,9 @@ export default class Controls{
                     },
                 });
                 this.firstMoveTimeline.to(this.room.torus.scale, {
-                    x: 0.1,
-                    y: 0.1,
-                    z: 0.1,
+                    x: 0.01,
+                    y: 0.01,
+                    z: 0.01,
                 });
 
                 
@@ -126,9 +126,9 @@ export default class Controls{
                     },
                 });
                 this.secondMoveTimeline.to(this.room.torus.scale, {
-                    x: 0.25,
-                    y: 0.25,
-                    z: 0.25,
+                    x: 0.025,
+                    y: 0.025,
+                    z: 0.025,
                 });
 
                 this.thirdMoveTimeline = new GSAP.timeline({
@@ -141,9 +141,9 @@ export default class Controls{
                     },
                 });
                 this.thirdMoveTimeline.to(this.room.torus.scale, {
-                    x: 0.1,
-                    y: 0.1,
-                    z: 0.1,
+                    x: 0.01,
+                    y: 0.01,
+                    z: 0.01,
                 });
             },
         });
