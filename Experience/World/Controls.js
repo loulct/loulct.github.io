@@ -3,186 +3,182 @@ import Experience from "../Experience.js";
 import GSAP from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger.js";
 
-export default class Controls{
-    constructor(){
-        this.experience = new Experience();
-        this.scene = this.experience.scene;
-        this.sizes = this.experience.sizes;
-        this.time = this.experience.time;
-        this.camera = this.experience.camera;
-        this.room =  this.experience.room;
-        this.preloader = this.experience.preloader;
-        GSAP.registerPlugin(ScrollTrigger);
+export default class Controls {
+  constructor() {
+    this.experience = new Experience();
+    this.scene = this.experience.scene;
+    this.sizes = this.experience.sizes;
+    this.time = this.experience.time;
+    this.camera = this.experience.camera;
+    this.room = this.experience.room;
+    this.preloader = this.experience.preloader;
+    GSAP.registerPlugin(ScrollTrigger);
 
-        this.progress = 0;
-        this.dummyCurve = new THREE.Vector3(0, 0, 0);
+    this.progress = 0;
+    this.dummyCurve = new THREE.Vector3(0, 0, 0);
 
-        this.lerp = {
-            current:0,
-            target:0,
-            ease:0.1,
-        };
+    this.lerp = {
+      current: 0,
+      target: 0,
+      ease: 0.1,
+    };
 
-        this.position = new THREE.Vector3(0, 0, 0);
-        this.lookAtPosition = new THREE.Vector3(0, 0, 0);
+    this.position = new THREE.Vector3(0, 0, 0);
+    this.lookAtPosition = new THREE.Vector3(0, 0, 0);
 
-        this.preloader.on("enablecontrols", ()=>{
-            this.setPath();
-            this.setScrollTrigger();
-            //this.showPath();
-            this.onWheel();
+    this.preloader.on("enablecontrols", () => {
+      this.setPath();
+      this.setScrollTrigger();
+      //this.showPath();
+      this.onWheel();
+    });
+  }
+
+  setPath() {
+    this.curve = new THREE.CatmullRomCurve3(
+      [new THREE.Vector3(2, 5, -10)],
+      true
+    );
+  }
+
+  setScrollTrigger() {
+    ScrollTrigger.matchMedia({
+      "(min-width: 969px)": () => {
+        this.room.torus.position.set(0, 0, 0);
+
+        this.firstMoveTimeline = new GSAP.timeline({
+          scrollTrigger: {
+            trigger: ".hero-second",
+            start: "top top",
+            end: "bottom bottom",
+            scrub: 2,
+            invalidateOnRefresh: true,
+            //markers:true,
+          },
         });
-    }
-
-    setPath(){
-        this.curve = new THREE.CatmullRomCurve3( [
-            new THREE.Vector3(2, 5, -10),
-        ], true);
-    }
-
-    setScrollTrigger(){
-        ScrollTrigger.matchMedia({
-            "(min-width: 969px)": () => {
-
-                this.room.torus.position.set(0, 0, 0);
-
-                this.firstMoveTimeline = new GSAP.timeline({
-                    scrollTrigger:{
-                        trigger:".hero-second",
-                        start:"top top",
-                        end:"bottom bottom",
-                        scrub: 2,
-                        invalidateOnRefresh:true,
-                        //markers:true,
-                    },
-                });
-                this.firstMoveTimeline.to(this.room.torus.position, {
-                    x: () => {
-                        return this.sizes.width * 0.002;
-                    },
-                });
-
-                
-                this.secondMoveTimeline = new GSAP.timeline({
-                    scrollTrigger:{
-                        trigger:".section-margin-second",
-                        start:"top top",
-                        end:"bottom bottom",
-                        scrub: 2,
-                        invalidateOnRefresh:true,
-                        //markers:true,
-                    },
-                });
-                this.secondMoveTimeline.to(this.room.torus.position, {
-                    x: () => {
-                        return -this.sizes.width * 0.002;
-                    },
-                });
-
-                this.thirdMoveTimeline = new GSAP.timeline({
-                    scrollTrigger:{
-                        trigger:".section-margin-third",
-                        start:"top top",
-                        end:"bottom bottom",
-                        scrub: 2,
-                        invalidateOnRefresh:true,
-                        //markers:true,
-                    },
-                });
-                this.thirdMoveTimeline.to(this.room.torus.position, {
-                    x: () => {
-                        return this.sizes.width * 0.002;
-                    },
-                });
-            },
-
-            "(max-width: 968px)": () => {
-
-                this.room.torus.position.set(0, 0, 0);
-
-                this.firstMoveTimeline = new GSAP.timeline({
-                    scrollTrigger:{
-                        trigger:".hero-second",
-                        start:"top top",
-                        end:"bottom bottom",
-                        scrub: 3,
-                        invalidateOnRefresh:true,
-                    },
-                });
-                this.firstMoveTimeline.to(this.room.torus.scale, {
-                    x: 0.01,
-                    y: 0.01,
-                    z: 0.01,
-                });
-
-                
-                this.secondMoveTimeline = new GSAP.timeline({
-                    scrollTrigger:{
-                        trigger:".section-margin-second",
-                        start:"top top",
-                        end:"bottom bottom",
-                        scrub: 3,
-                        invalidateOnRefresh:true,
-                    },
-                });
-                this.secondMoveTimeline.to(this.room.torus.scale, {
-                    x: 0.025,
-                    y: 0.025,
-                    z: 0.025,
-                });
-
-                this.thirdMoveTimeline = new GSAP.timeline({
-                    scrollTrigger:{
-                        trigger:".section-margin-third",
-                        start:"top top",
-                        end:"bottom bottom",
-                        scrub: 3,
-                        invalidateOnRefresh:true,
-                    },
-                });
-                this.thirdMoveTimeline.to(this.room.torus.scale, {
-                    x: 0.01,
-                    y: 0.01,
-                    z: 0.01,
-                });
-            },
+        this.firstMoveTimeline.to(this.room.torus.position, {
+          x: () => {
+            return this.sizes.width * 0.002;
+          },
         });
-    }
 
-    showPath(){
-        const points = this.curve.getPoints( 50 );
-        const geometry = new THREE.BufferGeometry().setFromPoints( points );
-        
-        const material = new THREE.LineBasicMaterial( { color: 0xff0000 } );
-        
-        const curveObject = new THREE.Line( geometry, material );
-        this.scene.add(curveObject);
-    }
-
-    onWheel(){
-        window.addEventListener("wheel", (e)=>{
-            if(e.deltaY > 0){
-                this.lerp.target += 0.01;
-            }else{
-                this.lerp.target -= 0.01;
-            }
+        this.secondMoveTimeline = new GSAP.timeline({
+          scrollTrigger: {
+            trigger: ".section-margin-second",
+            start: "top top",
+            end: "bottom bottom",
+            scrub: 2,
+            invalidateOnRefresh: true,
+            //markers:true,
+          },
         });
-    }
+        this.secondMoveTimeline.to(this.room.torus.position, {
+          x: () => {
+            return -this.sizes.width * 0.002;
+          },
+        });
 
-    resize(){
-    }
-    
-    update(){
-        this.lerp.current = GSAP.utils.interpolate(
-            this.lerp.current,
-            this.lerp.target,
-            this.lerp.ease
-        );
-        this.lerp.target = GSAP.utils.clamp(0, 1, this.lerp.target);
-        this.lerp.current = GSAP.utils.clamp(0, 1, this.lerp.current);
-        this.curve.getPointAt(this.lerp.current, this.position);
+        this.thirdMoveTimeline = new GSAP.timeline({
+          scrollTrigger: {
+            trigger: ".section-margin-third",
+            start: "top top",
+            end: "bottom bottom",
+            scrub: 2,
+            invalidateOnRefresh: true,
+            //markers:true,
+          },
+        });
+        this.thirdMoveTimeline.to(this.room.torus.position, {
+          x: () => {
+            return this.sizes.width * 0.002;
+          },
+        });
+      },
 
-        this.camera.orthographicCamera.position.copy(this.position);
-        this.camera.orthographicCamera.lookAt(0, 0, 0);
-    }
+      "(max-width: 968px)": () => {
+        this.room.torus.position.set(0, 0, 0);
+
+        this.firstMoveTimeline = new GSAP.timeline({
+          scrollTrigger: {
+            trigger: ".hero-second",
+            start: "top top",
+            end: "bottom bottom",
+            scrub: 3,
+            invalidateOnRefresh: true,
+          },
+        });
+        this.firstMoveTimeline.to(this.room.torus.scale, {
+          x: 0.01,
+          y: 0.01,
+          z: 0.01,
+        });
+
+        this.secondMoveTimeline = new GSAP.timeline({
+          scrollTrigger: {
+            trigger: ".section-margin-second",
+            start: "top top",
+            end: "bottom bottom",
+            scrub: 3,
+            invalidateOnRefresh: true,
+          },
+        });
+        this.secondMoveTimeline.to(this.room.torus.scale, {
+          x: 0.025,
+          y: 0.025,
+          z: 0.025,
+        });
+
+        this.thirdMoveTimeline = new GSAP.timeline({
+          scrollTrigger: {
+            trigger: ".section-margin-third",
+            start: "top top",
+            end: "bottom bottom",
+            scrub: 3,
+            invalidateOnRefresh: true,
+          },
+        });
+        this.thirdMoveTimeline.to(this.room.torus.scale, {
+          x: 0.01,
+          y: 0.01,
+          z: 0.01,
+        });
+      },
+    });
+  }
+
+  showPath() {
+    const points = this.curve.getPoints(50);
+    const geometry = new THREE.BufferGeometry().setFromPoints(points);
+
+    const material = new THREE.LineBasicMaterial({ color: 0xff0000 });
+
+    const curveObject = new THREE.Line(geometry, material);
+    this.scene.add(curveObject);
+  }
+
+  onWheel() {
+    window.addEventListener("wheel", (e) => {
+      if (e.deltaY > 0) {
+        this.lerp.target += 0.01;
+      } else {
+        this.lerp.target -= 0.01;
+      }
+    });
+  }
+
+  resize() {}
+
+  update() {
+    this.lerp.current = GSAP.utils.interpolate(
+      this.lerp.current,
+      this.lerp.target,
+      this.lerp.ease
+    );
+    this.lerp.target = GSAP.utils.clamp(0, 1, this.lerp.target);
+    this.lerp.current = GSAP.utils.clamp(0, 1, this.lerp.current);
+    this.curve.getPointAt(this.lerp.current, this.position);
+
+    this.camera.orthographicCamera.position.copy(this.position);
+    this.camera.orthographicCamera.lookAt(0, 0, 0);
+  }
 }

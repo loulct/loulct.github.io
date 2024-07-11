@@ -31,8 +31,8 @@ export default class Room extends EventEmitter {
       tw_size: 0.61,
       rg_ring: 0.25,
       ar_segm: 4,
-      ba_segm:0,
-      r_ring:0,
+      ba_segm: 0,
+      r_ring: 0,
     };
 
     (this.twist = new THREE.Group()), this.D;

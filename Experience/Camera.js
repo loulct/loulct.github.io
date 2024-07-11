@@ -1,86 +1,89 @@
 import * as THREE from "three";
 import Experience from "./Experience.js";
 
-import {OrbitControls} from "three/examples/jsm/controls/OrbitControls.js";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
 
-export default class Camera{
-    constructor(){
-        this.experience = new Experience();
-        this.sizes = this.experience.sizes;
-        this.scene = this.experience.scene;
-        this.canvas = this.experience.canvas;
-        
-        this.createPerspectiveCamera();
-        this.createOrthographicCamera();
-        //this.createHelper();
-        this.setOrbitControls();
-    }
+export default class Camera {
+  constructor() {
+    this.experience = new Experience();
+    this.sizes = this.experience.sizes;
+    this.scene = this.experience.scene;
+    this.canvas = this.experience.canvas;
 
-    createPerspectiveCamera(){
-        this.perspectiveCamera = new THREE.PerspectiveCamera(
-            35, 
-            this.sizes.aspect, 
-            0.1, 
-            100);
-        this.scene.add(this.perspectiveCamera);
-        this.perspectiveCamera.position.z = 55;
-        this.perspectiveCamera.position.x = 17;
-        this.perspectiveCamera.position.y = 29;
-    }
+    this.createPerspectiveCamera();
+    this.createOrthographicCamera();
+    //this.createHelper();
+    this.setOrbitControls();
+  }
 
-    createOrthographicCamera(){
-        this.frustrum = 5;
-        this.orthographicCamera = new THREE.OrthographicCamera(
-            (-this.sizes.aspect * this.sizes.frustrum)/2,
-            (this.sizes.aspect * this.sizes.frustrum)/2,
-            this.sizes.frustrum/2,
-            -this.sizes.frustrum/2,
-            -100,
-            100
-            );
-        this.scene.add(this.orthographicCamera);
-    }
+  createPerspectiveCamera() {
+    this.perspectiveCamera = new THREE.PerspectiveCamera(
+      35,
+      this.sizes.aspect,
+      0.1,
+      100
+    );
+    this.scene.add(this.perspectiveCamera);
+    this.perspectiveCamera.position.z = 55;
+    this.perspectiveCamera.position.x = 17;
+    this.perspectiveCamera.position.y = 29;
+  }
 
-    createHelper(){
-        this.helper = new THREE.CameraHelper(this.orthographicCamera);
-        this.scene.add(this.helper);
+  createOrthographicCamera() {
+    this.frustrum = 5;
+    this.orthographicCamera = new THREE.OrthographicCamera(
+      (-this.sizes.aspect * this.sizes.frustrum) / 2,
+      (this.sizes.aspect * this.sizes.frustrum) / 2,
+      this.sizes.frustrum / 2,
+      -this.sizes.frustrum / 2,
+      -100,
+      100
+    );
+    this.scene.add(this.orthographicCamera);
+  }
 
-        const size = 20;
-        const divisions = 20;
+  createHelper() {
+    this.helper = new THREE.CameraHelper(this.orthographicCamera);
+    this.scene.add(this.helper);
 
-        const gridHelper = new THREE.GridHelper(size, divisions);
-        this.scene.add(gridHelper);
+    const size = 20;
+    const divisions = 20;
 
-        const axesHelper = new THREE.AxesHelper(size, divisions);
-        this.scene.add(axesHelper);
-    }
+    const gridHelper = new THREE.GridHelper(size, divisions);
+    this.scene.add(gridHelper);
 
-    setOrbitControls(){
-        this.controls = new OrbitControls(this.perspectiveCamera, this.canvas);
-        this.controls.enableDamping = true;
-        this.controls.enableZoom = false;
-    }
+    const axesHelper = new THREE.AxesHelper(size, divisions);
+    this.scene.add(axesHelper);
+  }
 
-    resize(){
-        this.perspectiveCamera.aspect = this.sizes.aspect;
-        this.perspectiveCamera.updateProjectionMatrix();
-        
-        this.orthographicCamera.left = (-this.sizes.aspect * this.sizes.frustrum) / 2;
-        this.orthographicCamera.right = (this.sizes.aspect * this.sizes.frustrum) / 2;
-        this.orthographicCamera.top = this.sizes.frustrum / 2;
-        this.orthographicCamera.bottom = -this.sizes.frustrum / 2;
-        this.orthographicCamera.updateProjectionMatrix();
-    }
+  setOrbitControls() {
+    this.controls = new OrbitControls(this.perspectiveCamera, this.canvas);
+    this.controls.enableDamping = true;
+    this.controls.enableZoom = false;
+  }
 
-    update(){
-        this.controls.update();
-        //this.updateHelper();
-    }
+  resize() {
+    this.perspectiveCamera.aspect = this.sizes.aspect;
+    this.perspectiveCamera.updateProjectionMatrix();
 
-    updateHelper(){
-        this.helper.matrixWorldNeedsUpdate = true;
-        this.helper.update();
-        this.helper.position.copy(this.orthographicCamera.position);
-        this.helper.rotation.copy(this.orthographicCamera.rotation);
-    }
+    this.orthographicCamera.left =
+      (-this.sizes.aspect * this.sizes.frustrum) / 2;
+    this.orthographicCamera.right =
+      (this.sizes.aspect * this.sizes.frustrum) / 2;
+    this.orthographicCamera.top = this.sizes.frustrum / 2;
+    this.orthographicCamera.bottom = -this.sizes.frustrum / 2;
+    this.orthographicCamera.updateProjectionMatrix();
+  }
+
+  update() {
+    this.controls.update();
+    //this.updateHelper();
+  }
+
+  updateHelper() {
+    this.helper.matrixWorldNeedsUpdate = true;
+    this.helper.update();
+    this.helper.position.copy(this.orthographicCamera.position);
+    this.helper.rotation.copy(this.orthographicCamera.rotation);
+  }
 }
