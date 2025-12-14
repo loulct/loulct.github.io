@@ -6,6 +6,5 @@ window.onload = function () {
     section.style.display = "none";
   });
 
-  document.getElementById("age").innerText =
-    " (" + date.calculateAge(date.birthday).toString() + ")";
+  document.getElementById("age").innerText = `(${date.calculateAge().toString()})`;
 };
