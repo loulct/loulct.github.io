@@ -116,7 +116,7 @@ export default class Room extends EventEmitter {
     this.D.ri_cyl = (0.5 * this.D.l_cyl) / Math.tan(0.5 * this.D.ba_segm);
     this.D.r_ring =
       (0.5 * (1 + this.D.rg_ring) * this.D.h_cyl) /
-        Math.tan(0.5 * this.D.ba_ring) +
+      Math.tan(0.5 * this.D.ba_ring) +
       this.D.ri_cyl;
   }
 
@@ -133,7 +133,7 @@ export default class Room extends EventEmitter {
     });
   }
 
-  resize() {}
+  resize() { }
 
   update() {
     this.lerp.current = GSAP.utils.interpolate(

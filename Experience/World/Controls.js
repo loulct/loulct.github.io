@@ -166,7 +166,7 @@ export default class Controls {
     });
   }
 
-  resize() {}
+  resize() { }
 
   update() {
     this.lerp.current = GSAP.utils.interpolate(
